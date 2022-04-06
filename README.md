@@ -1,8 +1,12 @@
 # Sudoku
 Ruby lib for solving Sudoku puzzles
 
+## Usage
+
 ```bash
-> bin/console
+bundle install
+bundle exec rspec
+bin/console
 ```
 
 ```ruby
