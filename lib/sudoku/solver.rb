@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# See https://www.kristanix.com/sudokuepic/sudoku-solving-techniques.php
-
 module Sudoku
   class Solver
     attr_reader :board
@@ -39,7 +37,7 @@ module Sudoku
     end
 
     def exclusion_strategies
-      strategies('exclusion')
+      strategies('exclusions')
     end
 
     def strategies(type)

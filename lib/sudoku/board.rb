@@ -21,6 +21,7 @@ module Sudoku
       #  we rollback and try a different guess.
       attempts = 0
       until solved? || attempts >= 100
+        puts "Guess #{attempts}"
         guess_and_solve
         attempts += 1
       end

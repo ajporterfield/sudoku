@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# See "Block and column / Row Interaction" under "Techniques for removing candidates"
+# at https://www.kristanix.com/sudokuepic/sudoku-solving-techniques.php
+
 module Sudoku
   module Strategies
     module Exclusions
@@ -17,7 +20,7 @@ module Sudoku
         def call
           added_exclusions = false
 
-          board.empty_cells.each do |cell|
+          board.empty_cells.each_with_index do |cell, index|
             cell.candidates.each do |candidate|
               matches = cell.related_empty_cells(:block).select { |c| c.candidates.include?(candidate) }
               next unless matches.size == 1
@@ -35,7 +38,7 @@ module Sudoku
                                 end
 
               cells_to_update.each do |cell_to_update|
-                next if cell_to_update.exclusions.include?(candidate)
+                next unless cell_to_update.candidates.include?(candidate)
 
                 added_exclusions = true
                 cell_to_update.exclusions << candidate

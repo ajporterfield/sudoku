@@ -2,3 +2,4 @@
 
 Dir['./lib/sudoku/**/*.rb'].sort.each { |f| require f }
 require 'json'
+require 'byebug'

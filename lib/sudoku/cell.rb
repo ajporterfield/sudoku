@@ -30,6 +30,7 @@ module Sudoku
     end
 
     def candidates
+      return [] unless value.nil?
       ((1..9).to_a - (row_values + column_values + block_values).uniq - exclusions).sort
     end
 

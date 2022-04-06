@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# See "Hidden Subset" under "Techniques for removing candidates"
+# at https://www.kristanix.com/sudokuepic/sudoku-solving-techniques.php
+
 module Sudoku
   module Strategies
     module Exclusions

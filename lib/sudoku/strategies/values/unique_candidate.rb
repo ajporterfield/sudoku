@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
+# See https://www.kristanix.com/sudokuepic/sudoku-solving-techniques.php
+# You know that each block, row and column on a Sudoku board must contain every
+# number between 1 and 9. Therefore, if a number, say 4, can only be put in a
+# single cell within a block/column/row, then that number is guaranteed to fit there.
+
 module Sudoku
   module Strategies
     module Values
