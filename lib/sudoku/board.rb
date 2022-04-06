@@ -27,6 +27,7 @@ module Sudoku
       end
 
       to_s
+      solved?
     end
 
     def guess_and_solve

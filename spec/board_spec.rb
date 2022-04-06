@@ -64,8 +64,7 @@ RSpec.describe Sudoku::Board do
     %w[easy medium hard expert evil].each do |difficulty|
       it "can solve #{difficulty} puzzles" do
         board = described_class.load_fixture(difficulty)
-        board.solve
-        expect(board.solved?).to eq true
+        expect(board.solve).to eq true
       end
     end
 
