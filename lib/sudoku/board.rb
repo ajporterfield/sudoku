@@ -34,7 +34,9 @@ module Sudoku
       new_solver = Sudoku::Solver.new(new_board)
       new_solver.guess
       new_solver.solve
-      cells.flatten.each { |c| c.value = new_board.cell(c.id).value } if new_board.solved?
+      if new_board.solved?
+        empty_cells.each { |c| c.value = new_board.cell(c.id).value }
+      end
     end
 
     def solved?
