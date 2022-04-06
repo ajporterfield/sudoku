@@ -1,5 +1,6 @@
 # Sudoku
-Ruby lib for solving Sudoku puzzles
+Ruby library for solving Sudoku puzzles.  Inspired by the strategies found at https://www.kristanix.com/sudokuepic/sudoku-solving-techniques.php
+
 
 ## Usage
 
@@ -26,5 +27,7 @@ board = Sudoku::Board.new([
 # or create a board from one of the provided fixtures
 board = Sudoku::Board.load_fixture("hard")
 
+# solve will print out the board and return true/false
+# depending on if it was solved or not
 board.solve
 ```
