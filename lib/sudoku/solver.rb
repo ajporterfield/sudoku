@@ -8,6 +8,8 @@ module Sudoku
       @board = board
     end
 
+    # This method is recursive - continuing to try and solve the puzzle as new
+    # values are found and/or candidates eliminated.
     def solve
       repeat = true
       repeat = add_values while repeat

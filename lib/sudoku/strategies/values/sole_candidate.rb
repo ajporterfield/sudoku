@@ -26,8 +26,7 @@ module Sudoku
             candidates = cell.candidates
             next unless candidates.size == 1
 
-            sole_candidate = candidates[0]
-            cell.value = sole_candidate
+            cell.value = candidates[0]
             added_values = true
           end
 
