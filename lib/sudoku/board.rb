@@ -82,7 +82,7 @@ module Sudoku
     def create_cells(values)
       @cells = values.map.with_index do |row, y|
         row.map.with_index do |value, x|
-          Sudoku::Cell.new(self, x, y, value)
+          Sudoku::Cell.new(board: self, x: x, y: y, value: value)
         end
       end
     end

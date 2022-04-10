@@ -3,7 +3,7 @@
 RSpec.describe Sudoku::Cell do
   let(:board) { Sudoku::Board.load_fixture(fixture) }
   let(:fixture) { 'easy' }
-  let(:cell) { described_class.new(board, 4, 3, 9) }
+  let(:cell) { described_class.new(board: board, x: 4, y: 3, value: 9) }
 
   describe '#id' do
     subject { cell.id }

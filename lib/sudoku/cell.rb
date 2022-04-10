@@ -5,7 +5,7 @@ module Sudoku
     attr_reader :board, :x, :y
     attr_accessor :value, :exclusions
 
-    def initialize(board, x, y, value)
+    def initialize(board:, x:, y:, value: nil)
       @board = board
       @x = x
       @y = y

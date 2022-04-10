@@ -26,12 +26,15 @@ module Sudoku
 
     private
 
+    # Originally these two methods called any?, but map/reduce is now used so
+    # we don't return early from the first strategy that returns true.
+    # We want all strategies to run each pass.
     def add_values
-      value_strategies.any? { |s| s.call(board) }
+      value_strategies.map { |s| s.call(board) }.reduce(&:|)
     end
 
     def add_exclusions
-      exclusion_strategies.any? { |s| s.call(board) }
+      exclusion_strategies.map { |s| s.call(board) }.reduce(&:|)
     end
 
     def value_strategies
