@@ -40,7 +40,6 @@ module Sudoku
 
       cell.value = (cell.candidates - board.guesses[cell.id]).sample
       board.guesses[cell.id] << cell.value
-      puts "#{cell.id}:#{cell.value}"
     end
 
     def add_missing_values_from_solved_board(solved_board)
