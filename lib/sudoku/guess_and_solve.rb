@@ -10,7 +10,7 @@ module Sudoku
 
     def initialize(board)
       @board = board
-      board.guesses ||= build_guesses_hash_form_empty_cells
+      board.guesses ||= build_guesses_hash_from_empty_cells
       @new_board = copy_board
     end
 
@@ -24,7 +24,7 @@ module Sudoku
 
     private
 
-    def build_guesses_hash_form_empty_cells
+    def build_guesses_hash_from_empty_cells
       board.empty_cells.each_with_object({}) { |c, hash| hash[c.id] = [] }
     end
 
@@ -40,6 +40,7 @@ module Sudoku
 
       cell.value = (cell.candidates - board.guesses[cell.id]).sample
       board.guesses[cell.id] << cell.value
+      puts "#{cell.id}:#{cell.value}"
     end
 
     def add_missing_values_from_solved_board(solved_board)

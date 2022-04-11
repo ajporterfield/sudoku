@@ -14,7 +14,7 @@ module Sudoku
       repeat = true
       repeat = add_values while repeat
 
-      solve if add_exclusions
+      return solve if add_exclusions
       board.solved?
     end
 
