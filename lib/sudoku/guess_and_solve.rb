@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
+# This class attempts to solve puzzles by copying the board, looping
+# through all cells with 2 remaining candidates left, guessing a value.
+# Guesses are randomized (cells and values), but previous guesses are stored
+# so they're not repeated.
+
 module Sudoku
   class GuessAndSolve
     attr_reader :board, :new_board

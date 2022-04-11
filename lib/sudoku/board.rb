@@ -2,7 +2,7 @@
 
 module Sudoku
   class Board
-    MAX_GUESSES = 162 # 9 * 9 * 2
+    MAX_GUESSES = 100
 
     attr_reader :cells
     attr_accessor :guesses
