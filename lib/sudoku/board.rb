@@ -2,7 +2,10 @@
 
 module Sudoku
   class Board
+    MAX_GUESSES = 162 # 9 * 9 * 2
+
     attr_reader :cells
+    attr_accessor :guesses
 
     def self.load_fixture(name)
       new(JSON.parse(File.read("spec/fixtures/files/#{name}.json")))
@@ -18,31 +21,15 @@ module Sudoku
 
       # If we can't solve via deduction, then we try to guess the value of
       # a single cell with 2 possible candidates. If we're still unable to solve
-      #  we rollback and try a different guess.
+      # we rollback and try a different guess.
       attempts = 0
-      until solved? || attempts >= 100
-        guess_and_solve
+      until solved? || attempts >= MAX_GUESSES
+        Sudoku::GuessAndSolve.call(self)
         attempts += 1
       end
 
       to_s
       solved?
-    end
-
-    def guess_and_solve
-      new_board = copy_board
-      new_solver = Sudoku::Solver.new(new_board)
-      new_solver.guess
-      new_solver.solve
-      return unless new_board.solved?
-
-      empty_cells.each { |c| c.value = new_board.cell(c.id).value }
-    end
-
-    def copy_board
-      new_board = self.class.new(values)
-      empty_cells.select { |c| !c.exclusions.empty? }.each { |c| new_board.cell(c.id).exclusions = c.exclusions }
-      new_board
     end
 
     def solved?

@@ -15,13 +15,7 @@ module Sudoku
       repeat = add_values while repeat
 
       solve if add_exclusions
-    end
-
-    def guess
-      cell = board.empty_cells.sample { |c| c.candidates.size == 2 }
-      return unless cell
-
-      cell.value = cell.candidates.sample
+      board.solved?
     end
 
     private
