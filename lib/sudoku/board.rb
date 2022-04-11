@@ -30,13 +30,19 @@ module Sudoku
     end
 
     def guess_and_solve
-      new_board = self.class.new(values)
+      new_board = copy_board
       new_solver = Sudoku::Solver.new(new_board)
       new_solver.guess
       new_solver.solve
-      if new_board.solved?
-        empty_cells.each { |c| c.value = new_board.cell(c.id).value }
-      end
+      return unless new_board.solved?
+
+      empty_cells.each { |c| c.value = new_board.cell(c.id).value }
+    end
+
+    def copy_board
+      new_board = self.class.new(values)
+      empty_cells.select { |c| !c.exclusions.empty? }.each { |c| new_board.cell(c.id).exclusions = c.exclusions }
+      new_board
     end
 
     def solved?
