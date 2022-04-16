@@ -4,7 +4,7 @@ module Sudoku
   class Board
     MAX_GUESSES = 100
 
-    attr_reader :cells
+    attr_reader :cells, :rows, :columns, :blocks
     attr_accessor :guesses
 
     def self.load_fixture(name)
@@ -12,8 +12,10 @@ module Sudoku
     end
 
     def initialize(values)
-      @cells = []
       create_cells(values)
+      create_rows
+      create_columns
+      create_blocks
     end
 
     def solve
@@ -40,24 +42,6 @@ module Sudoku
       cells.flatten[id]
     end
 
-    def row(y)
-      cells[y]
-    end
-
-    def column(x)
-      cells.map { |row| row[x] }
-    end
-
-    def block(block_id)
-      x = (block_id % 3 * 3)
-      x_range = x..(x + 2)
-
-      y = (block_id / 3 * 3)
-      y_range = y..(y + 2)
-
-      cells[y_range].map { |r| r[x_range] }.flatten
-    end
-
     def to_s
       puts cells.map { |r| r.map(&:value).join(', ') }
     end
@@ -72,15 +56,11 @@ module Sudoku
 
     def candidates(cell)
       return [] unless cell.value.nil?
-      ((1..9).to_a - (row_values(cell.row_id) + column_values(cell.column_id) + block_values(cell.block_id)).uniq - cell.exclusions).sort
+      ((1..9).to_a - (rows[cell.row_id].values + columns[cell.column_id].values + blocks[cell.block_id].values).uniq - cell.exclusions).sort
     end
 
     def related_candidates(cell, row_column_or_block)
-      related_empty_cells(cell, row_column_or_block).map { |c| candidates(c) }.flatten.uniq
-    end
-
-    def related_empty_cells(cell, row_column_or_block)
-      send(row_column_or_block, cell.send("#{row_column_or_block}_id")).select { |c| c.id != cell.id && c.value.nil? }
+      send("#{row_column_or_block}s")[cell.send("#{row_column_or_block}_id")].related_empty_cells(cell).map { |c| candidates(c) }.flatten.uniq
     end
 
     private
@@ -93,16 +73,32 @@ module Sudoku
       end
     end
 
-    def row_values(row_id)
-      row(row_id).map(&:value).compact
+    def create_rows
+      @rows = (0..8).map do |i|
+        Sudoku::Row.new(id: i, cells: cells[i])
+      end
     end
 
-    def column_values(column_id)
-      column(column_id).map(&:value).compact
+    def create_columns
+      @columns = (0..8).map do |i|
+        Sudoku::Column.new(id: i, cells: cells.map { |row| row[i] })
+      end
     end
 
-    def block_values(block_id)
-      block(block_id).map(&:value).compact
+    def create_blocks
+      @blocks = (0..8).map do |i|
+        block_cells = begin
+          x = (i % 3 * 3)
+          x_range = x..(x + 2)
+
+          y = (i / 3 * 3)
+          y_range = y..(y + 2)
+
+          cells[y_range].map { |r| r[x_range] }.flatten
+        end
+
+        Sudoku::Block.new(id: i, cells: block_cells)
+      end
     end
   end
 end

@@ -33,20 +33,20 @@ RSpec.describe Sudoku::Board do
     it { is_expected.to eq 1 }
   end
 
-  describe '#row' do
-    subject { board.row(1).map(&:value) }
+  describe '#rows' do
+    subject { board.rows[1].values }
 
     it { is_expected.to eq [4, 5, 6, 7, 8, 9, 1, 2, 3] }
   end
 
-  describe '#column' do
-    subject { board.column(2).map(&:value) }
+  describe '#columns' do
+    subject { board.columns[2].values }
 
     it { is_expected.to eq [3, 6, 9, 4, 7, 1, 5, 8, 2] }
   end
 
-  describe '#block' do
-    subject { board.block(3).map(&:value) }
+  describe '#blocks' do
+    subject { board.blocks[3].values }
 
     it { is_expected.to eq [2, 3, 4, 5, 6, 7, 8, 9, 1] }
   end

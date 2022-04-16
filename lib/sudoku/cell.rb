@@ -27,5 +27,9 @@ module Sudoku
     def block_id
       ((y / 3) * 3) + (x / 3)
     end
+
+    def empty?
+      value.nil?
+    end
   end
 end

@@ -22,17 +22,17 @@ module Sudoku
 
           board.empty_cells.each_with_index do |cell, index|
             board.candidates(cell).each do |candidate|
-              matches = board.related_empty_cells(cell, :block).select { |c| board.candidates(c).include?(candidate) }
+              matches = board.blocks[cell.block_id].related_empty_cells(cell).select { |c| board.candidates(c).include?(candidate) }
               next unless matches.size == 1
 
               cells_to_update = if matches[0].x == cell.x
                                   board.cells.map do |r|
                                     r.find do |c|
-                                      c.x == cell.x && !board.block(cell.block_id).map(&:y).include?(c.y)
+                                      c.x == cell.x && !board.blocks[cell.block_id].cells.map(&:y).include?(c.y)
                                     end
                                   end.compact
                                 elsif matches[0].y == cell.y
-                                  board.row(cell.y).reject { |c| board.block(cell.block_id).map(&:x).include?(c.x) }
+                                  board.rows[cell.row_id].cells.reject { |c| board.blocks[cell.block_id].cells.map(&:x).include?(c.x) }
                                 else
                                   []
                                 end
