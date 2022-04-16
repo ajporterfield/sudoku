@@ -24,8 +24,8 @@ module Sudoku
 
           board.empty_cells.each do |cell|
             unique_candidate = %i[row column block].map do |row_column_or_block|
-              related_candidates = cell.related_candidates(row_column_or_block)
-              remaining_candidates = cell.candidates - related_candidates
+              related_candidates = board.related_candidates(cell, row_column_or_block)
+              remaining_candidates = board.candidates(cell) - related_candidates
               remaining_candidates[0] if remaining_candidates.size == 1
             end.compact[0]
 

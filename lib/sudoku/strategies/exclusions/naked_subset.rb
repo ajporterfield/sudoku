@@ -23,17 +23,17 @@ module Sudoku
           4.downto(2).each do |subset|
             board.empty_cells.each do |cell|
               %i[row column block].each do |row_column_or_block|
-                next unless cell.candidates.size == subset
+                next unless board.candidates(cell).size == subset
 
-                related_empty_cells = cell.related_empty_cells(row_column_or_block)
-                matches = related_empty_cells.select { |c| c.candidates == cell.candidates }
+                related_empty_cells = board.related_empty_cells(cell, row_column_or_block)
+                matches = related_empty_cells.select { |c| board.candidates(c) == board.candidates(cell) }
                 next unless matches.size == (subset - 1)
 
                 other_cells = related_empty_cells.reject { |c| matches.map(&:id).include?(c.id) }
                 other_cells.each do |other_cell|
-                  next if (cell.candidates - other_cell.exclusions).empty?
+                  next if (board.candidates(cell) - other_cell.exclusions).empty?
 
-                  other_cell.exclusions += cell.candidates
+                  other_cell.exclusions += board.candidates(cell)
                   added_exclusions = true
                 end
               end

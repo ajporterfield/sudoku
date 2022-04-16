@@ -70,14 +70,39 @@ module Sudoku
       cells.flatten.select { |c| c.value.nil? }
     end
 
+    def candidates(cell)
+      return [] unless cell.value.nil?
+      ((1..9).to_a - (row_values(cell.row_id) + column_values(cell.column_id) + block_values(cell.block_id)).uniq - cell.exclusions).sort
+    end
+
+    def related_candidates(cell, row_column_or_block)
+      related_empty_cells(cell, row_column_or_block).map { |c| candidates(c) }.flatten.uniq
+    end
+
+    def related_empty_cells(cell, row_column_or_block)
+      send(row_column_or_block, cell.send("#{row_column_or_block}_id")).select { |c| c.id != cell.id && c.value.nil? }
+    end
+
     private
 
     def create_cells(values)
       @cells = values.map.with_index do |row, y|
         row.map.with_index do |value, x|
-          Sudoku::Cell.new(board: self, x: x, y: y, value: value)
+          Sudoku::Cell.new(x: x, y: y, value: value)
         end
       end
+    end
+
+    def row_values(row_id)
+      row(row_id).map(&:value).compact
+    end
+
+    def column_values(column_id)
+      column(column_id).map(&:value).compact
+    end
+
+    def block_values(block_id)
+      block(block_id).map(&:value).compact
     end
   end
 end

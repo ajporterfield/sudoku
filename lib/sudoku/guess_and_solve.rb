@@ -43,7 +43,7 @@ module Sudoku
       cell = cell_with_two_candidates_and_remaining_guesses
       return unless cell
 
-      cell.value = (cell.candidates - board.guesses[cell.id]).sample
+      cell.value = (board.candidates(cell) - board.guesses[cell.id]).sample
       board.guesses[cell.id] << cell.value
     end
 
@@ -53,7 +53,7 @@ module Sudoku
 
     def cell_with_two_candidates_and_remaining_guesses
       new_board.empty_cells.select do |cell|
-        candidates_size = cell.candidates.size
+        candidates_size = board.candidates(cell).size
         next false unless candidates_size == 2
         guesses_size = board.guesses[cell.id].size
         guesses_size < candidates_size

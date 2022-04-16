@@ -3,7 +3,7 @@
 RSpec.describe Sudoku::Cell do
   let(:board) { Sudoku::Board.load_fixture(fixture) }
   let(:fixture) { 'easy' }
-  let(:cell) { described_class.new(board: board, x: 4, y: 3, value: 9) }
+  let(:cell) { described_class.new(x: 4, y: 3, value: 9) }
 
   describe '#id' do
     subject { cell.id }
@@ -11,21 +11,21 @@ RSpec.describe Sudoku::Cell do
     it { is_expected.to eq 31 }
   end
 
-  describe '#row' do
-    subject { cell.row }
+  describe '#row_id' do
+    subject { cell.row_id }
 
-    it { is_expected.to eq board.row(cell.y) }
+    it { is_expected.to eq 3 }
   end
 
-  describe '#column' do
-    subject { cell.column }
+  describe '#column_id' do
+    subject { cell.column_id }
 
-    it { is_expected.to eq board.column(cell.x) }
+    it { is_expected.to eq 4 }
   end
 
-  describe '#block' do
-    subject { cell.block }
+  describe '#block_id' do
+    subject { cell.block_id }
 
-    it { is_expected.to eq board.block(4) }
+    it { is_expected.to eq 4 }
   end
 end

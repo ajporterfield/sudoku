@@ -24,7 +24,7 @@ module Sudoku
             (0..8).each do |i|
               %i[row column block].each do |row_column_or_block_sym|
                 row_column_or_block = board.send(row_column_or_block_sym, i)
-                candidates = row_column_or_block.map(&:candidates).flatten.uniq.sort
+                candidates = row_column_or_block.map { |c| board.candidates(c) }.flatten.uniq.sort
 
                 # board = Sudoku::Board.load_fixture("hard")
                 # Build a hash where the keys are the unique candidates represented in the
@@ -40,7 +40,7 @@ module Sudoku
                 # }
                 results = candidates.each_with_object({}) do |candidate, hash|
                   hash[candidate.to_s] = row_column_or_block.map do |cell|
-                    cell.id if cell.candidates.include?(candidate)
+                    cell.id if board.candidates(cell).include?(candidate)
                   end.compact.sort
                 end
 
@@ -59,7 +59,7 @@ module Sudoku
 
                   cells = cell_ids.map { |cell_id| board.cell(cell_id) }
                   cells.each do |cell|
-                    other_candidates = cell.candidates - candidates
+                    other_candidates = board.candidates(cell) - candidates
                     next if other_candidates.empty?
 
                     cell.exclusions += other_candidates

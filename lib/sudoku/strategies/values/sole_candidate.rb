@@ -23,7 +23,7 @@ module Sudoku
           added_values = false
 
           board.empty_cells.each do |cell|
-            candidates = cell.candidates
+            candidates = board.candidates(cell)
             next unless candidates.size == 1
 
             cell.value = candidates[0]
