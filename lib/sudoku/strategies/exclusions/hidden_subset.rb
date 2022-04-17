@@ -21,12 +21,10 @@ module Sudoku
           added_exclusions = false
 
           4.downto(2).each do |subset|
-            (0..8).each do |i|
-              %i[row column block].each do |row_column_or_block_sym|
-                row_column_or_block = board.send("#{row_column_or_block_sym}s")[i]
+            %i[rows columns blocks].each do |groupings|
+              board.send(groupings).each do |row_column_or_block|
                 candidates = row_column_or_block.cells.map { |c| board.candidates(c) }.flatten.uniq.sort
 
-                # board = Sudoku::Board.load_fixture("hard")
                 # Build a hash where the keys are the unique candidates represented in the
                 # row, column, or block and the values are an array of cell ids where each
                 # candidat is present.

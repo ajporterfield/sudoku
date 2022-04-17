@@ -51,11 +51,11 @@ module Sudoku
     end
 
     def empty_cells
-      cells.flatten.select { |c| c.value.nil? }
+      cells.flatten.select(&:empty?)
     end
 
     def candidates(cell)
-      return [] unless cell.value.nil?
+      return [] unless cell.empty?
       ((1..9).to_a - (rows[cell.row_id].values + columns[cell.column_id].values + blocks[cell.block_id].values).uniq - cell.exclusions).sort
     end
 
