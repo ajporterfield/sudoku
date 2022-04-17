@@ -13,9 +13,7 @@ module Sudoku
 
     def initialize(values)
       create_cells(values)
-      create_rows
-      create_columns
-      create_blocks
+      create_groupings
     end
 
     def solve
@@ -38,20 +36,16 @@ module Sudoku
       empty_cells.empty?
     end
 
-    def cell(id)
-      cells.flatten[id]
-    end
-
     def to_s
-      puts cells.map { |r| r.map(&:value).join(', ') }
+      puts rows.map { |r| r.cells.map(&:value).join(', ') }
     end
 
     def values
-      cells.map { |r| r.map(&:value) }
+      rows.map { |r| r.cells.map(&:value) }
     end
 
     def empty_cells
-      cells.flatten.select(&:empty?)
+      cells.select(&:empty?)
     end
 
     def candidates(cell)
@@ -66,38 +60,20 @@ module Sudoku
     private
 
     def create_cells(values)
-      @cells = values.map.with_index do |row, y|
-        row.map.with_index do |value, x|
-          Sudoku::Cell.new(x: x, y: y, value: value)
-        end
+      @cells = values.flatten.map.with_index do |value, id|
+        Sudoku::Cell.new(id: id, value: value)
       end
     end
 
-    def create_rows
-      @rows = (0..8).map do |i|
-        Sudoku::Row.new(id: i, cells: cells[i])
-      end
-    end
+    def create_groupings
+      @rows = []
+      @columns = []
+      @blocks = []
 
-    def create_columns
-      @columns = (0..8).map do |i|
-        Sudoku::Column.new(id: i, cells: cells.map { |row| row[i] })
-      end
-    end
-
-    def create_blocks
-      @blocks = (0..8).map do |i|
-        block_cells = begin
-          x = (i % 3 * 3)
-          x_range = x..(x + 2)
-
-          y = (i / 3 * 3)
-          y_range = y..(y + 2)
-
-          cells[y_range].map { |r| r[x_range] }.flatten
-        end
-
-        Sudoku::Block.new(id: i, cells: block_cells)
+      (0..8).each do |id|
+        @rows << Sudoku::Row.new(id: id, cells: cells.select { |c| c.row_id == id })
+        @columns << Sudoku::Column.new(id: id, cells: cells.select { |c| c.column_id == id })
+        @blocks << Sudoku::Block.new(id: id, cells: cells.select { |c| c.block_id == id })
       end
     end
   end

@@ -12,7 +12,7 @@ RSpec.describe Sudoku::Strategies::Exclusions::NakedSubset do
 
     [9, 27, 45, 63].each do |cell_id|
       it 'finds naked subsets and removes candidates' do
-        expect { subject }.to change { board.cell(cell_id).exclusions }.from([]).to([4, 7])
+        expect { subject }.to change { board.cells[cell_id].exclusions }.from([]).to([4, 7])
       end
     end
   end

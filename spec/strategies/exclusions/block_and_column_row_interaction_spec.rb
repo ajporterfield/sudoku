@@ -14,7 +14,7 @@ RSpec.describe Sudoku::Strategies::Exclusions::BlockAndColumnRowInteraction do
 
       it 'adds exclusions to corresponding rows in the other block' do
         subject
-        cell_ids.each { |cell_id| expect(board.cell(cell_id).exclusions).to eq([7]) }
+        cell_ids.each { |cell_id| expect(board.cells[cell_id].exclusions).to eq([7]) }
       end
 
       it "doesn't add exclusions to other cells" do
@@ -31,7 +31,7 @@ RSpec.describe Sudoku::Strategies::Exclusions::BlockAndColumnRowInteraction do
 
       it 'adds exclusions to corresponding rows in the other block' do
         subject
-        cell_ids.each { |cell_id| expect(board.cell(cell_id).exclusions).to eq([7]) }
+        cell_ids.each { |cell_id| expect(board.cells[cell_id].exclusions).to eq([7]) }
       end
 
       it "doesn't add exclusions to other cells" do

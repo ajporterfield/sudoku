@@ -11,7 +11,7 @@ RSpec.describe Sudoku::Strategies::Values::UniqueCandidate do
     it { is_expected.to eq true }
 
     it 'finds and fills in unique candidates' do
-      expect { subject }.to change { board.cell(63).value }.from(nil).to(4)
+      expect { subject }.to change { board.cells[63].value }.from(nil).to(4)
     end
   end
 

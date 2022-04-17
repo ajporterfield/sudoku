@@ -28,7 +28,7 @@ RSpec.describe Sudoku::Board do
   end
 
   describe '#cell' do
-    subject { board.cell(0).value }
+    subject { board.cells[0].value }
 
     it { is_expected.to eq 1 }
   end

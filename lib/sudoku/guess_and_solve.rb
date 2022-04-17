@@ -35,7 +35,7 @@ module Sudoku
 
     def copy_board
       new_board = Sudoku::Board.new(board.values)
-      board.empty_cells.select { |c| !c.exclusions.empty? }.each { |c| new_board.cell(c.id).exclusions = c.exclusions }
+      board.empty_cells.select { |c| !c.exclusions.empty? }.each { |c| new_board.cells[c.id].exclusions = c.exclusions }
       new_board
     end
 
@@ -48,7 +48,7 @@ module Sudoku
     end
 
     def add_missing_values_from_solved_board(solved_board)
-      board.empty_cells.each { |c| c.value = solved_board.cell(c.id).value }
+      board.empty_cells.each { |c| c.value = solved_board.cells[c.id].value }
     end
 
     def cell_with_two_candidates_and_remaining_guesses

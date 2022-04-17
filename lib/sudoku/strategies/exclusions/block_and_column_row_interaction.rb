@@ -26,8 +26,8 @@ module Sudoku
               next unless matches.size == 1
 
               cells_to_update = if matches[0].x == cell.x
-                                  board.cells.map do |r|
-                                    r.find do |c|
+                                  board.rows.map do |r|
+                                    r.cells.find do |c|
                                       c.x == cell.x && !board.blocks[cell.block_id].cells.map(&:y).include?(c.y)
                                     end
                                   end.compact

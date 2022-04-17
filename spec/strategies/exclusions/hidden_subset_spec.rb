@@ -7,8 +7,8 @@ RSpec.describe Sudoku::Strategies::Exclusions::HiddenSubset do
 
   context "when new exclusions are added" do
     let(:fixture) { "hidden_subset" }
-    let(:cell_60) { board.cell(60) }
-    let(:cell_78) { board.cell(78) }
+    let(:cell_60) { board.cells[60] }
+    let(:cell_78) { board.cells[78] }
 
     it { is_expected.to eq true }
 

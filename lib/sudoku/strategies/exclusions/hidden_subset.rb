@@ -55,7 +55,7 @@ module Sudoku
                 results.values.uniq.each do |cell_ids|
                   candidates = results.select { |_k, v| cell_ids == v }.keys.map(&:to_i)
 
-                  cells = cell_ids.map { |cell_id| board.cell(cell_id) }
+                  cells = cell_ids.map { |cell_id| board.cells[cell_id] }
                   cells.each do |cell|
                     other_candidates = board.candidates(cell) - candidates
                     next if other_candidates.empty?

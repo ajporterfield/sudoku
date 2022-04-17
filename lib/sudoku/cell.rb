@@ -2,27 +2,25 @@
 
 module Sudoku
   class Cell
-    attr_reader :x, :y
+    attr_reader :id
     attr_accessor :value, :exclusions
 
-    def initialize(x:, y:, value: nil)
-      @x = x
-      @y = y
+    def initialize(id:, value: nil)
+      @id = id
       @value = value
       @exclusions = []
     end
 
-    def id
-      (9 * y) + x
+    def x
+      id % 9
     end
 
-    def row_id
-      y
+    def y
+      id / 9
     end
 
-    def column_id
-      x
-    end
+    alias_method :row_id, :y
+    alias_method :column_id, :x
 
     def block_id
       ((y / 3) * 3) + (x / 3)

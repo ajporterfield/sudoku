@@ -11,7 +11,7 @@ RSpec.describe Sudoku::Strategies::Values::SoleCandidate do
     it { is_expected.to eq true }
 
     it 'finds and fills in sole candidates' do
-      expect { subject }.to change { board.cell(50).value }.from(nil).to(5)
+      expect { subject }.to change { board.cells[50].value }.from(nil).to(5)
     end
   end
 
