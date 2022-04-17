@@ -41,7 +41,7 @@ module Sudoku
     end
 
     def values
-      rows.map { |r| r.cells.map(&:value) }
+      cells.map(&:value)
     end
 
     def empty_cells
