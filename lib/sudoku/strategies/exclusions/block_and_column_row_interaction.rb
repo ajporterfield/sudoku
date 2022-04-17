@@ -22,7 +22,8 @@ module Sudoku
 
           board.empty_cells.each_with_index do |cell, index|
             board.candidates(cell).each do |candidate|
-              matches = board.blocks[cell.block_id].related_empty_cells(cell).select { |c| board.candidates(c).include?(candidate) }
+              related_empty_cells = board.blocks[cell.block_id].empty_cells - [cell]
+              matches = related_empty_cells.select { |c| board.candidates(c).include?(candidate) }
               next unless matches.size == 1
 
               cells_to_update = if matches[0].x == cell.x

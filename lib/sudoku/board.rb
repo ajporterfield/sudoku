@@ -53,10 +53,6 @@ module Sudoku
       ((1..9).to_a - (rows[cell.row_id].values + columns[cell.column_id].values + blocks[cell.block_id].values).uniq - cell.exclusions).sort
     end
 
-    def related_candidates(cell, row_column_or_block)
-      send("#{row_column_or_block}s")[cell.send("#{row_column_or_block}_id")].related_empty_cells(cell).map { |c| candidates(c) }.flatten.uniq
-    end
-
     private
 
     def create_cells(values)

@@ -25,7 +25,7 @@ module Sudoku
               %i[row column block].each do |row_column_or_block|
                 next unless board.candidates(cell).size == subset
 
-                related_empty_cells = board.send("#{row_column_or_block}s")[cell.send("#{row_column_or_block}_id")].related_empty_cells(cell)
+                related_empty_cells = board.send("#{row_column_or_block}s")[cell.send("#{row_column_or_block}_id")].empty_cells - [cell]
                 matches = related_empty_cells.select { |c| board.candidates(c) == board.candidates(cell) }
                 next unless matches.size == (subset - 1)
 
