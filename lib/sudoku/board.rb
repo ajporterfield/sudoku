@@ -48,11 +48,6 @@ module Sudoku
       cells.select(&:empty?)
     end
 
-    def candidates(cell)
-      return [] unless cell.empty?
-      ((1..9).to_a - (rows[cell.row_id].values + columns[cell.column_id].values + blocks[cell.block_id].values).uniq - cell.exclusions).sort
-    end
-
     private
 
     def create_cells(values)

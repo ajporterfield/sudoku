@@ -25,7 +25,7 @@ module Sudoku
           board.empty_cells.each do |cell|
             unique_candidate = %i[row column block].map do |row_column_or_block|
               remaining_cells = board.send("#{row_column_or_block}s")[cell.send("#{row_column_or_block}_id")].cells - [cell]
-              remaining_candidates = board.candidates(cell) - remaining_cells.map { |rc| board.candidates(rc) }.flatten.uniq
+              remaining_candidates = cell.candidates(board) - remaining_cells.map { |rc| rc.candidates(board) }.flatten.uniq
               remaining_candidates[0] if remaining_candidates.size == 1
             end.compact[0]
 

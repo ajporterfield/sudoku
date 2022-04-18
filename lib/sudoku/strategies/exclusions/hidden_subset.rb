@@ -23,7 +23,7 @@ module Sudoku
           4.downto(2).each do |subset|
             %i[rows columns blocks].each do |groupings|
               board.send(groupings).each do |row_column_or_block|
-                candidates = row_column_or_block.cells.map { |c| board.candidates(c) }.flatten.uniq.sort
+                candidates = row_column_or_block.cells.map { |c| c.candidates(board) }.flatten.uniq.sort
 
                 # Build a hash where the keys are the unique candidates represented in the
                 # row, column, or block and the values are an array of cell ids where each
@@ -38,7 +38,7 @@ module Sudoku
                 # }
                 results = candidates.each_with_object({}) do |candidate, hash|
                   hash[candidate.to_s] = row_column_or_block.cells.map do |cell|
-                    cell.id if board.candidates(cell).include?(candidate)
+                    cell.id if cell.candidates(board).include?(candidate)
                   end.compact.sort
                 end
 
@@ -57,7 +57,7 @@ module Sudoku
 
                   cells = cell_ids.map { |cell_id| board.cells[cell_id] }
                   cells.each do |cell|
-                    other_candidates = board.candidates(cell) - candidates
+                    other_candidates = cell.candidates(board) - candidates
                     next if other_candidates.empty?
 
                     cell.exclusions += other_candidates

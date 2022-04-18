@@ -29,5 +29,10 @@ module Sudoku
     def empty?
       value.nil?
     end
+
+    def candidates(board)
+      return [] unless empty?
+      ((1..9).to_a - (board.rows[row_id].values + board.columns[column_id].values + board.blocks[block_id].values).uniq - exclusions).sort
+    end
   end
 end

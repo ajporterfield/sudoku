@@ -13,8 +13,8 @@ RSpec.describe Sudoku::Strategies::Exclusions::HiddenSubset do
     it { is_expected.to eq true }
 
     it 'finds hidden subsets and removes candidates' do
-      expect { subject }.to change { board.candidates(cell_60) }.from([1, 2, 3, 8, 9]).to([8, 9])
-                        .and change { board.candidates(cell_78) }.from([2, 3, 5, 8, 9]).to([8, 9])
+      expect { subject }.to change { cell_60.candidates(board) }.from([1, 2, 3, 8, 9]).to([8, 9])
+                        .and change { cell_78.candidates(board) }.from([2, 3, 5, 8, 9]).to([8, 9])
     end
   end
 

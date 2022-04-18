@@ -21,9 +21,9 @@ module Sudoku
           added_exclusions = false
 
           board.empty_cells.each_with_index do |cell, index|
-            board.candidates(cell).each do |candidate|
+            cell.candidates(board).each do |candidate|
               related_empty_cells = board.blocks[cell.block_id].empty_cells - [cell]
-              matches = related_empty_cells.select { |c| board.candidates(c).include?(candidate) }
+              matches = related_empty_cells.select { |c| c.candidates(board).include?(candidate) }
               next unless matches.size == 1
 
               cells_to_update = if matches[0].x == cell.x
@@ -39,7 +39,7 @@ module Sudoku
                                 end
 
               cells_to_update.each do |cell_to_update|
-                next unless board.candidates(cell_to_update).include?(candidate)
+                next unless cell_to_update.candidates(board).include?(candidate)
 
                 added_exclusions = true
                 cell_to_update.exclusions << candidate

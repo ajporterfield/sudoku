@@ -50,7 +50,7 @@ module Sudoku
                 other_block_cells = other_block_row_cells(other_block, block_0_row_indexes[0])
                 other_block_cells += other_block_row_cells(other_block, block_0_row_indexes[1])
                 other_block_cells.each do |cell|
-                  next unless board.candidates(cell).include?(candidate)
+                  next unless cell.candidates(board).include?(candidate)
 
                   cell.exclusions << candidate
                   added_exclusions = true
@@ -63,7 +63,7 @@ module Sudoku
         end
 
         def block_row_candidates(block)
-          block_candidates = block.cells.map { |c| board.candidates(c) }
+          block_candidates = block.cells.map { |c| c.candidates(board) }
           [
             block_candidates[0..2].flatten.uniq,
             block_candidates[3..5].flatten.uniq,
@@ -110,7 +110,7 @@ module Sudoku
                 other_block_cells = other_block_column_cells(other_block, block_0_column_indexes[0])
                 other_block_cells += other_block_column_cells(other_block, block_1_column_indexes[1])
                 other_block_cells.each do |cell|
-                  next unless board.candidates(cell).include?(candidate)
+                  next unless cell.candidates(board).include?(candidate)
 
                   cell.exclusions << candidate
                   added_exclusions = true
@@ -123,7 +123,7 @@ module Sudoku
         end
 
         def block_column_candidates(block)
-          block_candidates = block.cells.map { |c| board.candidates(c) }
+          block_candidates = block.cells.map { |c| c.candidates(board) }
           [
             block_candidates.select.with_index { |bc, i| [0, 3, 6].include?(i) }.flatten.uniq,
             block_candidates.select.with_index { |bc, i| [1, 4, 7].include?(i) }.flatten.uniq,
