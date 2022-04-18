@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'sudoku/solver'
+require 'sudoku/board'
+
 RSpec.describe Sudoku::Solver do
   let(:board) { Sudoku::Board.load_fixture(fixture) }
   let(:fixture) { 'easy' }

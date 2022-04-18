@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+Dir['./lib/sudoku/strategies/**/*.rb'].sort.each { |f| require f }
+
 module Sudoku
   class Solver
     attr_reader :board

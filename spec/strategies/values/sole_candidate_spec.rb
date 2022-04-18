@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'sudoku/strategies/values/sole_candidate'
+require 'sudoku/board'
+
 RSpec.describe Sudoku::Strategies::Values::SoleCandidate do
   let(:board) { Sudoku::Board.load_fixture(fixture) }
 

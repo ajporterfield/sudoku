@@ -1,4 +1,6 @@
+require 'sudoku/grouping'
+
 module Sudoku
-  class Block < ::Sudoku::Grouping
+  class Block < Grouping
   end
 end

@@ -1,4 +1,6 @@
+require 'sudoku/grouping'
+
 module Sudoku
-  class Column < ::Sudoku::Grouping
+  class Column < Grouping
   end
 end

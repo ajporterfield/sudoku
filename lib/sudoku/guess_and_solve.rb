@@ -5,6 +5,9 @@
 # Guesses are randomized (cells and values), but previous guesses are stored
 # so they're not repeated.
 
+require 'sudoku/solver'
+require 'sudoku/board'
+
 module Sudoku
   class GuessAndSolve
     attr_reader :board, :new_board

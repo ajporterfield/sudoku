@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'sudoku/strategies/exclusions/block_block_interaction'
+require 'sudoku/board'
+
 RSpec.describe Sudoku::Strategies::Exclusions::BlockBlockInteraction do
   let(:board) { Sudoku::Board.load_fixture(fixture) }
 

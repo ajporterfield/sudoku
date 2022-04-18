@@ -1,4 +1,6 @@
+require 'sudoku/grouping'
+
 module Sudoku
-  class Row < ::Sudoku::Grouping
+  class Row < Grouping
   end
 end

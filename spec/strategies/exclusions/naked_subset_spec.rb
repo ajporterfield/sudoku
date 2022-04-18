@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'sudoku/strategies/exclusions/naked_subset'
+require 'sudoku/board'
+
 RSpec.describe Sudoku::Strategies::Exclusions::NakedSubset do
   let(:board) { Sudoku::Board.load_fixture(fixture) }
 

@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'sudoku/strategies/exclusions/hidden_subset'
+require 'sudoku/board'
+
 RSpec.describe Sudoku::Strategies::Exclusions::HiddenSubset do
   let(:board) { Sudoku::Board.load_fixture(fixture) }
 

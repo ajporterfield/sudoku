@@ -1,5 +1,13 @@
 # frozen_string_literal: true
 
+require 'json'
+require 'sudoku/solver'
+require 'sudoku/guess_and_solve'
+require 'sudoku/cell'
+require 'sudoku/row'
+require 'sudoku/column'
+require 'sudoku/block'
+
 module Sudoku
   class Board
     MAX_GUESSES = 100

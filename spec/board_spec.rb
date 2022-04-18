@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'json'
+require 'sudoku/board'
+
 RSpec.describe Sudoku::Board do
   let(:board) { described_class.load_fixture(fixture) }
   let(:fixture) { 'solved' }

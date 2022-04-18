@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'sudoku/guess_and_solve'
+require 'sudoku/board'
+
 RSpec.describe Sudoku::GuessAndSolve do
   let(:board) { Sudoku::Board.load_fixture(fixture) }
   let(:fixture) { 'evil' }
