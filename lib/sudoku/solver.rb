@@ -11,8 +11,9 @@ module Sudoku
     # This method is recursive - continuing to try and solve the puzzle as new
     # values are found and/or candidates eliminated.
     def solve
-      repeat = true
-      repeat = add_values while repeat
+      loop do
+        break unless add_values
+      end
 
       return solve if add_exclusions
       board.solved?

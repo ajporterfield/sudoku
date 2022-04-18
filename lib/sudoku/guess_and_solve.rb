@@ -44,6 +44,8 @@ module Sudoku
       return unless cell
 
       cell.value = (cell.candidates(board) - board.guesses[cell.id]).sample
+      # Keeping track of guesses helps us not guess the same cell/value
+      # multiple times while trying to solve.
       board.guesses[cell.id] << cell.value
     end
 
@@ -56,8 +58,7 @@ module Sudoku
         candidates_size = cell.candidates(board).size
         next false unless candidates_size == 2
 
-        guesses_size = board.guesses[cell.id].size
-        guesses_size < candidates_size
+        board.guesses[cell.id].size < candidates_size
       end.sample
     end
   end

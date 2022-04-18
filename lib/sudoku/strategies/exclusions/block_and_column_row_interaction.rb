@@ -24,8 +24,9 @@ module Sudoku
             block = board.blocks[cell.block_id]
             row = board.rows[cell.row_id]
             related_empty_cells = block.empty_cells - [cell]
+            candidates = cell.candidates(board)
 
-            cell.candidates(board).each do |candidate|
+            candidates.each do |candidate|
               matches = related_empty_cells.select { |c| c.candidates(board).include?(candidate) }
               next unless matches.size == 1
 

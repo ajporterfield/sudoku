@@ -23,16 +23,18 @@ module Sudoku
           added_values = false
 
           board.empty_cells.each do |cell|
+            candidates = cell.candidates(board)
+
             unique_candidate = %i[row column block].map do |row_column_or_block|
               remaining_cells = board.send("#{row_column_or_block}s")[cell.send("#{row_column_or_block}_id")].cells - [cell]
-              remaining_candidates = cell.candidates(board) - remaining_cells.map { |rc| rc.candidates(board) }.flatten.uniq
+              remaining_candidates = candidates - remaining_cells.map { |rc| rc.candidates(board) }.flatten.uniq
               remaining_candidates[0] if remaining_candidates.size == 1
             end.compact[0]
 
-            if unique_candidate
-              cell.value = unique_candidate
-              added_values = true
-            end
+            next unless unique_candidate
+
+            cell.value = unique_candidate
+            added_values = true
           end
 
           added_values
