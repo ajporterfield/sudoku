@@ -65,14 +65,14 @@ module Sudoku
     end
 
     def create_groupings
-      @rows = []
-      @columns = []
-      @blocks = []
+      %i[row column block].each do |grouping_name|
+        groupings = (0..8).map do |id|
+          grouping_class = Object.const_get("Sudoku::#{grouping_name.capitalize}")
+          grouping_cells = cells.select { |c| c.send("#{grouping_name}_id") == id }
+          grouping_class.new(id: id, cells: grouping_cells)
+        end
 
-      (0..8).each do |id|
-        @rows << Sudoku::Row.new(id: id, cells: cells.select { |c| c.row_id == id })
-        @columns << Sudoku::Column.new(id: id, cells: cells.select { |c| c.column_id == id })
-        @blocks << Sudoku::Block.new(id: id, cells: cells.select { |c| c.block_id == id })
+        instance_variable_set("@#{grouping_name}s", groupings)
       end
     end
   end

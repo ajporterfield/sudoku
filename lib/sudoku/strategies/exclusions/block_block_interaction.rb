@@ -64,11 +64,10 @@ module Sudoku
 
         def block_row_candidates(block)
           block_candidates = block.cells.map { |c| c.candidates(board) }
-          [
-            block_candidates[0..2].flatten.uniq,
-            block_candidates[3..5].flatten.uniq,
-            block_candidates[6..8].flatten.uniq
-          ]
+          (0..2).map do |row_id|
+            range = (row_id * 3)..((row_id * 3) + 2)
+            block_candidates[range].flatten.uniq
+          end
         end
 
         def block_row_indexes(candidate, block_row_candidates)
@@ -124,11 +123,9 @@ module Sudoku
 
         def block_column_candidates(block)
           block_candidates = block.cells.map { |c| c.candidates(board) }
-          [
-            block_candidates.select.with_index { |bc, i| [0, 3, 6].include?(i) }.flatten.uniq,
-            block_candidates.select.with_index { |bc, i| [1, 4, 7].include?(i) }.flatten.uniq,
-            block_candidates.select.with_index { |bc, i| [2, 5, 8].include?(i) }.flatten.uniq
-          ]
+          (0..2).map do |column_id|
+            block_candidates.select.with_index { |bc, i| [column_id, column_id + 3, column_id + 6].include?(i) }.flatten.uniq
+          end
         end
 
         def other_block_column_cells(other_block, column)
