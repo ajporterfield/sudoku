@@ -55,6 +55,7 @@ module Sudoku
       new_board.empty_cells.select do |cell|
         candidates_size = cell.candidates(board).size
         next false unless candidates_size == 2
+
         guesses_size = board.guesses[cell.id].size
         guesses_size < candidates_size
       end.sample

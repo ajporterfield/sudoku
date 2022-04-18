@@ -20,20 +20,23 @@ module Sudoku
         def call
           added_exclusions = false
 
-          board.empty_cells.each_with_index do |cell, index|
+          board.empty_cells.each do |cell|
+            block = board.blocks[cell.block_id]
+            row = board.rows[cell.row_id]
+            related_empty_cells = block.empty_cells - [cell]
+
             cell.candidates(board).each do |candidate|
-              related_empty_cells = board.blocks[cell.block_id].empty_cells - [cell]
               matches = related_empty_cells.select { |c| c.candidates(board).include?(candidate) }
               next unless matches.size == 1
 
               cells_to_update = if matches[0].x == cell.x
                                   board.rows.map do |r|
                                     r.cells.find do |c|
-                                      c.x == cell.x && !board.blocks[cell.block_id].cells.map(&:y).include?(c.y)
+                                      c.x == cell.x && !block.cells.map(&:y).include?(c.y)
                                     end
                                   end.compact
                                 elsif matches[0].y == cell.y
-                                  board.rows[cell.row_id].cells.reject { |c| board.blocks[cell.block_id].cells.map(&:x).include?(c.x) }
+                                  row.cells.reject { |c| block.cells.map(&:x).include?(c.x) }
                                 else
                                   []
                                 end

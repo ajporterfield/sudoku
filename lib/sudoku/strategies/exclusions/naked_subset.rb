@@ -22,18 +22,19 @@ module Sudoku
 
           4.downto(2).each do |subset|
             board.empty_cells.each do |cell|
-              %i[row column block].each do |row_column_or_block|
-                next unless cell.candidates(board).size == subset
+              candidates = cell.candidates(board)
+              next unless candidates.size == subset
 
-                related_empty_cells = board.send("#{row_column_or_block}s")[cell.send("#{row_column_or_block}_id")].empty_cells - [cell]
-                matches = related_empty_cells.select { |c| c.candidates(board) == cell.candidates(board) }
-                next unless matches.size == (subset - 1)
+              %i[row column block].each do |grouping_name|
+                related_empty_cells = board.send("#{grouping_name}s")[cell.send("#{grouping_name}_id")].empty_cells - [cell]
+                cells_with_matching_candidates = related_empty_cells.select { |c| c.candidates(board) == candidates }
+                next unless cells_with_matching_candidates.size == (subset - 1)
 
-                other_cells = related_empty_cells.reject { |c| matches.map(&:id).include?(c.id) }
-                other_cells.each do |other_cell|
-                  next if (cell.candidates(board) - other_cell.exclusions).empty?
+                cells_to_update = related_empty_cells - cells_with_matching_candidates
+                cells_to_update.each do |cell_to_update|
+                  next if (candidates - cell_to_update.exclusions).empty?
 
-                  other_cell.exclusions += cell.candidates(board)
+                  cell_to_update.exclusions += candidates
                   added_exclusions = true
                 end
               end

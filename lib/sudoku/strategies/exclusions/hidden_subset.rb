@@ -21,13 +21,13 @@ module Sudoku
           added_exclusions = false
 
           4.downto(2).each do |subset|
-            %i[rows columns blocks].each do |groupings|
-              board.send(groupings).each do |row_column_or_block|
-                candidates = row_column_or_block.cells.map { |c| c.candidates(board) }.flatten.uniq.sort
+            %i[rows columns blocks].each do |grouping_name|
+              board.send(grouping_name).each do |row_column_or_block|
+                candidates = row_column_or_block.candidates(board)
 
                 # Build a hash where the keys are the unique candidates represented in the
                 # row, column, or block and the values are an array of cell ids where each
-                # candidat is present.
+                # candidate is present.
                 # {
                 #   "2" => [3, 4, 5, 6, 7, 8],
                 #   "3" => [3, 4, 5, 7, 8],

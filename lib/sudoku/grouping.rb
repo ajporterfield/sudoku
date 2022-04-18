@@ -14,5 +14,9 @@ module Sudoku
     def empty_cells
       cells.select(&:empty?)
     end
+
+    def candidates(board)
+      cells.map { |c| c.candidates(board) }.flatten.uniq.sort
+    end
   end
 end
