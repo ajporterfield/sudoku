@@ -2,7 +2,7 @@ module Sudoku
   class Grouping
     attr_reader :id, :cells
 
-    def initialize(id: id, cells: cells)
+    def initialize(id:, cells:)
       @id = id
       @cells = cells
     end
